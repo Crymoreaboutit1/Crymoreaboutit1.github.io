@@ -30,19 +30,26 @@ function shakeScreen() {
   shake();
 }
 
-document.getElementById('toggle-1').addEventListener('click', function() {
+// Event listener per i toggle (input checkbox o radio)
+
+document.getElementById('toggle-1').addEventListener('change', function() {
   changeBackground('https://xatimg.com/image/aNh0Aki6NX0S.jpg');
   shakeScreen();
 });
 
-document.getElementById('toggle-2').addEventListener('click', function() {
+document.getElementById('toggle-2').addEventListener('change', function() {
   changeBackground('https://xatimg.com/image/L9Pz1LFIZDrF.png');
   shakeScreen();
 });
 
-document.getElementById('toggle-3').addEventListener('click', function() {
+document.getElementById('toggle-3').addEventListener('change', function() {
   changeBackground('https://xatimg.com/image/ikuSQk3oNX30.jpg');
   shakeScreen();
 });
 
-// Aggiungi altri toggle se ne hai altri con lo stesso schema
+// Aggiungi altri toggle con lo stesso schema, per esempio:
+
+// document.getElementById('toggle-4').addEventListener('change', function() {
+//   changeBackground('URL_immagine_4');
+//   shakeScreen();
+// });
