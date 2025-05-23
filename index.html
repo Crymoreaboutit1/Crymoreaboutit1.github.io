@@ -7,34 +7,44 @@
 <style>
   body {
     margin: 0;
-    transition: background-image 0.5s ease;
-    background-size: cover;
-    background-position: center center;
+    min-height: 100vh;
+    background-color: #111; /* fallback scuro */
     background-repeat: no-repeat;
-    height: 100vh;
+    background-position: center center;
+    background-size: contain; /* fa sì che l'immagine sia contenuta e non tagliata */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    transition: background-image 0.5s ease;
   }
   .btn-container {
-    position: fixed;
-    top: 20px;
-    left: 20px;
+    margin-bottom: 30px;
     display: flex;
-    gap: 10px;
-    z-index: 10;
+    gap: 15px;
   }
   button {
     padding: 10px 15px;
     font-size: 16px;
     cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #444;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #666;
   }
 </style>
 </head>
 <body>
 
 <div class="btn-container">
-  <button data-bg="https://xatimg.com/image/aNh0Aki6NX0S.jpg">Sfondo 1</button>
-  <button data-bg="https://xatimg.com/image/L9Pz1LFIZDrF.png">Sfondo 2</button>
-  <button data-bg="https://xatimg.com/image/ikuSQk3oNX30.jpg">Eeepy</button>
-  <button data-bg="https://xatimg.com/image/aNh0Aki6NX0S.jpg">Sfondo 4</button>
+  <button data-bg="https://picsum.photos/id/1018/800/600">Sfondo 1</button>
+  <button data-bg="https://picsum.photos/id/1023/800/600">Sfondo 2</button>
+  <button data-bg="https://picsum.photos/id/1024/800/600">Sfondo 3</button>
+  <button data-bg="https://picsum.photos/id/1025/800/600">Sfondo 4</button>
 </div>
 
 <script>
@@ -47,9 +57,5 @@
     });
   });
 
-  // Imposta uno sfondo iniziale
-  document.body.style.backgroundImage = `url('https://picsum.photos/id/1018/1920/1080')`;
-</script>
-
-</body>
-</html>
+  // Sfondo iniziale
+  document.body.style.backgroundImage = `url('https://picsum.photos/id/
