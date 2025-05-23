@@ -3,81 +3,83 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Toggle Sfondo con foto xatimage</title>
+<title>Cambia Sfondo</title>
 <style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background-color: black;
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background-color: #222;
     background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
+    background-position: center;
+    background-size: contain; /* così l'immagine si adatta senza tagli */
     transition: background-image 0.5s ease-in-out;
   }
 
-  .toggles {
+  .buttons-container {
     position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 10px;
+    gap: 15px;
     z-index: 1000;
   }
 
-  .toggles label {
-    background: rgba(255,255,255,0.7);
-    padding: 8px 12px;
-    border-radius: 5px;
+  .buttons-container button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.8);
     cursor: pointer;
-    user-select: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
   }
 
-  .toggles input[type="radio"] {
-    display: none;
+  .buttons-container button:hover {
+    background: rgba(0,0,0,0.8);
+    color: white;
   }
 
-  .toggles input[type="radio"]:checked + label {
-    background: rgba(0,0,0,0.7);
+  .buttons-container button.active {
+    background: rgba(0,0,0,0.9);
     color: white;
   }
 </style>
 </head>
 <body>
 
-<div class="toggles">
-  <input type="radio" id="bg1" name="background" checked />
-  <label for="bg1">Sfondo 1</label>
-
-  <input type="radio" id="bg2" name="background" />
-  <label for="bg2">Sfondo 2</label>
-
-  <input type="radio" id="bg3" name="background" />
-  <label for="bg3">Sfondo 3</label>
-
-  <input type="radio" id="bg4" name="background" />
-  <label for="bg4">Sfondo 4</label>
+<div class="buttons-container">
+  <button data-bg="bg1" class="active">Sfondo 1</button>
+  <button data-bg="bg2">Sfondo 2</button>
+  <button data-bg="bg3">Sfondo 3</button>
+  <button data-bg="bg4">Sfondo 4</button>
 </div>
 
 <script>
-  const body = document.body;
   const backgrounds = {
     bg1: 'https://xatimage.com/path/to/your/image1.jpg',
     bg2: 'https://xatimage.com/path/to/your/image2.jpg',
     bg3: 'https://xatimage.com/path/to/your/image3.jpg',
-    bg4: 'https://xatimage.com/path/to/your/image4.jpg'
+    bg4: 'https://xatimage.com/path/to/your/image4.jpg',
   };
 
-  document.querySelectorAll('input[name="background"]').forEach(input => {
-    input.addEventListener('change', () => {
-      if(input.checked) {
-        body.style.backgroundImage = `url('${backgrounds[input.id]}')`;
-      }
+  const buttons = document.querySelectorAll('.buttons-container button');
+
+  function setBackground(key) {
+    document.body.style.backgroundImage = `url('${backgrounds[key]}')`;
+
+    buttons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.bg === key);
+    });
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      setBackground(btn.dataset.bg);
     });
   });
 
-  // Sfondo iniziale
-  body.style.backgroundImage = `url('${backgrounds['bg1']}')`;
+  // Imposta sfondo iniziale
+  setBackground('bg1');
 </script>
 
 </body>
