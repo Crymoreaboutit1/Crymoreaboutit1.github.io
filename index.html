@@ -1,49 +1,74 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Cambia Sfondo</title>
-<style>
-  html, body {
-    margin: 0; padding: 0; height: 100%;
-    background-color: #222;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain; /* così l'immagine si adatta senza tagli */
-    transition: background-image 0.5s ease-in-out;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cambia Sfondo + Musica</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      background-color: #222;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      transition: background-image 0.5s ease-in-out;
+    }
 
-  .buttons-container {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 15px;
-    z-index: 1000;
-  }
+    .buttons-container {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+      z-index: 1000;
+    }
 
-  .buttons-container button {
-    padding: 10px 16px;
-    border: none;
-    border-radius: 6px;
-    background: rgba(255,255,255,0.8);
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s ease;
-  }
+    .buttons-container button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.8);
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
 
-  .buttons-container button:hover {
-    background: rgba(0,0,0,0.8);
-    color: white;
-  }
+    .buttons-container button:hover {
+      background: rgba(0,0,0,0.8);
+      color: white;
+    }
 
-  .buttons-container button.active {
-    background: rgba(0,0,0,0.9);
-    color: white;
-  }
-</style>
+    .buttons-container button.active {
+      background: rgba(0,0,0,0.9);
+      color: white;
+    }
+
+    .toggle-play {
+      position: fixed;
+      bottom: 50px;
+      right: 50px;
+      z-index: 12000;
+      border: none;
+      outline: none;
+      background: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .toggle-play i {
+      font-size: 32px;
+      transition: color 0.3s ease;
+    }
+
+    .toggle-play:hover i {
+      color: #ccc;
+    }
+  </style>
 </head>
 <body>
 
@@ -53,6 +78,14 @@
   <button data-bg="bg3">Eeepy</button>
   <button data-bg="bg4">Sfondo 4</button>
 </div>
+
+<!-- Pulsante musica -->
+<button class="toggle-play" id="togglePlayBtn">
+  <i class="fa fa-play" id="playIcon"></i>
+</button>
+
+<!-- Elemento audio -->
+<audio id="backgroundAudio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
 
 <script>
   const backgrounds = {
@@ -66,7 +99,6 @@
 
   function setBackground(key) {
     document.body.style.backgroundImage = `url('${backgrounds[key]}')`;
-
     buttons.forEach(btn => {
       btn.classList.toggle('active', btn.dataset.bg === key);
     });
@@ -78,8 +110,24 @@
     });
   });
 
-  // Imposta sfondo iniziale
   setBackground('bg1');
+
+  // Musica
+  const audio = document.getElementById("backgroundAudio");
+  const toggleBtn = document.getElementById("togglePlayBtn");
+  const playIcon = document.getElementById("playIcon");
+
+  toggleBtn.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
+      playIcon.classList.remove("fa-play");
+      playIcon.classList.add("fa-pause");
+    } else {
+      audio.pause();
+      playIcon.classList.remove("fa-pause");
+      playIcon.classList.add("fa-play");
+    }
+  });
 </script>
 
 </body>
