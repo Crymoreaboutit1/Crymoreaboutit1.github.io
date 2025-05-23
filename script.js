@@ -1,4 +1,4 @@
-const nickname = document.getElementById('nickname');
+// Cambio sfondo e animazione tremore
 
 function changeBackground(imageUrl) {
   document.body.style.backgroundImage = `url('${imageUrl}')`;
@@ -8,8 +8,8 @@ function changeBackground(imageUrl) {
 }
 
 function shakeScreen() {
-  const intensity = 10; // Intensità del tremore
-  const duration = 500; // Durata del tremore in ms
+  const intensity = 10; // intensità del tremore
+  const duration = 500; // durata in ms
   const startX = window.scrollX;
   const startY = window.scrollY;
   const startTime = Date.now();
@@ -24,10 +24,9 @@ function shakeScreen() {
       window.scrollTo(startX + randomX, startY + randomY);
       requestAnimationFrame(shake);
     } else {
-      window.scrollTo(startX, startY); // Ritorna alla posizione originale
+      window.scrollTo(startX, startY);
     }
   }
-
   shake();
 }
 
@@ -45,3 +44,5 @@ document.getElementById('toggle-3').addEventListener('click', function() {
   changeBackground('https://xatimg.com/image/ikuSQk3oNX30.jpg');
   shakeScreen();
 });
+
+// Aggiungi altri toggle se ne hai altri con lo stesso schema
