@@ -84,26 +84,7 @@ body {
     /* Use mask image to fade the particles on every side */
     mask-image: radial-gradient( black, transparent 70%,  transparent 100%);
     /* Repeat the gradient and then setup the prticles with the background-size & position */
-    background-image: 
-      var(--particles), 
-      var(--particles), 
-      var(--particles), 
-      var(--particles),
-      var(--particles);
-    background-size: 100%, 60%, 40%, 20%, 200%;
-    background-position: 1010% 100%, 160% 60%, 140% 40%, 120% 20%;
-    opacity: 0.6;
-  }
-  &:before {
-    filter: blur(6px);
-  }
-  &:after {
-    background-image: 
-      var(--particles), 
-      var(--particles),
-      var(--particles);
-    background-size: 100%, 60%, 40%, 20%;
-    background-position: 1010% 100%, 160% 60%, 140% 40%, 120% 20%;
+    
   }
 }
  
