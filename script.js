@@ -38,34 +38,11 @@
 
 const nickname = document.getElementById('nickname');
 
-  function changeColor(color) {
-    document.body.style.backgroundColor = color;
-    nickname.style.color = color === '#FF0000' ? '#ff0000' : '#ff0000';
-  }
-
-  document.getElementById('toggle-1').addEventListener('click', function() {
-    changeColor('#FFA500'); // Amber
-  });
-
-  document.getElementById('toggle-2').addEventListener('click', function() {
-    changeColor('#00FF00'); // Lime
-  });
-
-  document.getElementById('toggle-3').addEventListener('click', function() {
-    changeColor('#87CEEB'); // Sky
-  });
-
-  document.getElementById('toggle-4').addEventListener('click', function() {
-    changeColor('#FF0000'); // Red
-  });
-
-  document.getElementById('toggle-5').addEventListener('click', function() {
-    changeColor('#FFC0CB'); // Pink
-  });
-
-  document.getElementById('toggle-6').addEventListener('click', function() {
-    changeColor('#708090'); // Zinc
-  });
+ function changeBackground(imageUrl) {
+  document.body.style.backgroundImage = `url('${imageUrl}')`;
+  document.body.style.backgroundSize = 'cover';
+  document.body.style.backgroundPosition = 'center';
+  document.body.style.backgroundRepeat = 'no-repeat';
 
 
 
@@ -95,6 +72,16 @@ const nickname = document.getElementById('nickname');
     }
 
     // Evento de clique para acionar o tremor
-    document.addEventListener('click', function() {
-        shakeScreen();
-    });
+   document.getElementById('toggle-1').addEventListener('click', function() {
+  changeBackground('https://xatimg.com/image/aNh0Aki6NX0S.jpg');
+});
+
+document.getElementById('toggle-2').addEventListener('click', function() {
+  changeBackground('https://xatimg.com/image/L9Pz1LFIZDrF.png');
+});
+
+document.getElementById('toggle-3').addEventListener('click', function() {
+  changeBackground('https://xatimg.com/image/ikuSQk3oNX30.jpg');
+});
+
+// Aggiungi altri toggle se ne hai altri
