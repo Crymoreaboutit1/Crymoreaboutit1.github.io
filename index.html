@@ -3,59 +3,82 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Cambia Sfondo</title>
+<title>Toggle Sfondo con foto xatimage</title>
 <style>
   body {
     margin: 0;
-    min-height: 100vh;
-    background-color: #111; /* fallback scuro */
+    height: 100vh;
+    background-color: black;
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: contain; /* fa sì che l'immagine sia contenuta e non tagliata */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    transition: background-image 0.5s ease;
+    background-size: contain;
+    transition: background-image 0.5s ease-in-out;
   }
-  .btn-container {
-    margin-bottom: 30px;
+
+  .toggles {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    gap: 15px;
+    gap: 10px;
+    z-index: 1000;
   }
-  button {
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
+
+  .toggles label {
+    background: rgba(255,255,255,0.7);
+    padding: 8px 12px;
     border-radius: 5px;
-    background-color: #444;
-    color: white;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
+    user-select: none;
   }
-  button:hover {
-    background-color: #666;
+
+  .toggles input[type="radio"] {
+    display: none;
+  }
+
+  .toggles input[type="radio"]:checked + label {
+    background: rgba(0,0,0,0.7);
+    color: white;
   }
 </style>
 </head>
 <body>
 
-<div class="btn-container">
-  <button data-bg="https://xatimg.com/image/aNh0Aki6NX0S.jpg">Sfondo 1</button>
-  <button data-bg="https://xatimg.com/image/L9Pz1LFIZDrF.png">Sfondo 2</button>
-  <button data-bg="https://xatimg.com/image/ikuSQk3oNX30.jpg">´Eeepy</button>
-  <button data-bg="https://xatimg.com/image/aNh0Aki6NX0S.jpg">Sfondo 4</button>
+<div class="toggles">
+  <input type="radio" id="bg1" name="background" checked />
+  <label for="bg1">Sfondo 1</label>
+
+  <input type="radio" id="bg2" name="background" />
+  <label for="bg2">Sfondo 2</label>
+
+  <input type="radio" id="bg3" name="background" />
+  <label for="bg3">Sfondo 3</label>
+
+  <input type="radio" id="bg4" name="background" />
+  <label for="bg4">Sfondo 4</label>
 </div>
 
 <script>
-  const buttons = document.querySelectorAll('.btn-container button');
+  const body = document.body;
+  const backgrounds = {
+    bg1: 'https://xatimage.com/path/to/your/image1.jpg',
+    bg2: 'https://xatimage.com/path/to/your/image2.jpg',
+    bg3: 'https://xatimage.com/path/to/your/image3.jpg',
+    bg4: 'https://xatimage.com/path/to/your/image4.jpg'
+  };
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const imageUrl = btn.getAttribute('data-bg');
-      document.body.style.backgroundImage = `url('${imageUrl}')`;
+  document.querySelectorAll('input[name="background"]').forEach(input => {
+    input.addEventListener('change', () => {
+      if(input.checked) {
+        body.style.backgroundImage = `url('${backgrounds[input.id]}')`;
+      }
     });
   });
 
   // Sfondo iniziale
-  document.body.style.backgroundImage = `url('https://picsum.photos/id/
+  body.style.backgroundImage = `url('${backgrounds['bg1']}')`;
+</script>
+
+</body>
+</html>
