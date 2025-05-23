@@ -79,14 +79,11 @@
   <button data-bg="bg4">Sfondo 4</button>
 </div>
 
-<!-- Pulsante musica -->
 <button class="toggle-play" id="togglePlayBtn">
   <i class="fa fa-play" id="playIcon"></i>
 </button>
 
-<!-- Elemento audio -->
-<audio id="backgroundAudio" src="https://crymoreaboutit1.github.io/bleach.mp3" loop></audio>
-
+<audio id="backgroundAudio" src="https://raw.githubusercontent.com/Crymoreaboutit1/Crymoreaboutit1.github.io/main/bleach.mp3" loop></audio>
 
 <script>
   const backgrounds = {
@@ -113,7 +110,6 @@
 
   setBackground('bg1');
 
-  // Musica
   const audio = document.getElementById("backgroundAudio");
   const toggleBtn = document.getElementById("togglePlayBtn");
   const playIcon = document.getElementById("playIcon");
