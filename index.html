@@ -3,20 +3,23 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Toggle Sfondo</title>
+<title>Cambia Sfondo</title>
 <style>
   body {
+    margin: 0;
     transition: background-image 0.5s ease;
     background-size: cover;
-    background-position: center;
+    background-position: center center;
     background-repeat: no-repeat;
+    height: 100vh;
   }
-  .buttons-container {
+  .btn-container {
     position: fixed;
     top: 20px;
     left: 20px;
     display: flex;
     gap: 10px;
+    z-index: 10;
   }
   button {
     padding: 10px 15px;
@@ -27,26 +30,25 @@
 </head>
 <body>
 
-<div class="buttons-container">
-  <button id="btn1">Sfondo 1</button>
-  <button id="btn2">Sfondo 2</button>
-  <button id="btn3">Sfondo 3</button>
-  <button id="btn4">Sfondo 4</button>
+<div class="btn-container">
+  <button data-bg="https://picsum.photos/id/1018/1920/1080">Sfondo 1</button>
+  <button data-bg="https://picsum.photos/id/1023/1920/1080">Sfondo 2</button>
+  <button data-bg="https://picsum.photos/id/1024/1920/1080">Sfondo 3</button>
+  <button data-bg="https://picsum.photos/id/1025/1920/1080">Sfondo 4</button>
 </div>
 
 <script>
-  const backgrounds = {
-    btn1: "https://xatimg.com/image/aNh0Aki6NX0S.jpg",
-    btn2: "https://xatimg.com/image/L9Pz1LFIZDrF.png",
-    btn3: "https://xatimg.com/image/ikuSQk3oNX30.jpg",
-    btn4: "https://xatimg.com/image/aNh0Aki6NX0S.jpg"
-  };
+  const buttons = document.querySelectorAll('.btn-container button');
 
-  Object.keys(backgrounds).forEach(id => {
-    document.getElementById(id).addEventListener('click', () => {
-      document.body.style.backgroundImage = `url('${backgrounds[id]}')`;
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const imageUrl = btn.getAttribute('data-bg');
+      document.body.style.backgroundImage = `url('${imageUrl}')`;
     });
   });
+
+  // Imposta uno sfondo iniziale
+  document.body.style.backgroundImage = `url('https://picsum.photos/id/1018/1920/1080')`;
 </script>
 
 </body>
