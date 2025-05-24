@@ -69,7 +69,7 @@
       color: #ccc;
     }
 
-    /* Effetto ghost per la frase */
+    /* Effetto ghost per le frasi */
     .ghost-text {
       position: fixed;
       top: 20px;
@@ -85,10 +85,30 @@
       z-index: 9999;
       transition: color 0.3s ease;
       display: none; /* nascosta di default */
+      white-space: pre-line; /* per interpretare i ritorni a capo */
     }
 
     .ghost-text:hover {
       color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Colori personalizzati per la frase giapponese */
+    .jp-kanji {
+      color: rgba(255, 255, 255, 0.15);
+    }
+
+    .jp-romaji {
+      color: rgba(255, 50, 50, 0.15);
+      font-style: italic;
+    }
+
+    /* Al passaggio mouse intensifica i colori */
+    .jp-kanji:hover {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .jp-romaji:hover {
+      color: rgba(255, 50, 50, 0.5);
     }
   </style>
 </head>
@@ -107,10 +127,23 @@
 
 <audio id="backgroundAudio" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/diver.mp3" loop></audio>
 
-<div class="ghost-text">
+<!-- Prima frase -->
+<div id="ghostText1" class="ghost-text">
   Though his light slipped into shadow,<br>
   mine will never carry darkness.<br>
   We´ll be fine — sleep well, Athena.
+</div>
+
+<!-- Seconda frase con colori diversi -->
+<div id="ghostText4" class="ghost-text">
+  <span class="jp-kanji">息をしたくて ここは苦しくて</span><br>
+  <span class="jp-romaji">iki wo shitakute koko wa kurushikute</span><br>
+  <span class="jp-kanji">闇を見上げるだけの夜は もがく減圧症のダイバー</span><br>
+  <span class="jp-romaji">yami wo miageru dake no yoru wa, mogaku gen’atsushou no daibaa</span><br>
+  <span class="jp-kanji">生きているんだって 確かめたくて</span><br>
+  <span class="jp-romaji">ikite iru’ndatte tashikametakute</span><br>
+  <span class="jp-kanji">深い海底を目指してもう一度 呼吸をしよう</span><br>
+  <span class="jp-romaji">fukai kaitei wo mezashite mou ichido kokyuu wo shiyou</span>
 </div>
 
 <script>
@@ -129,12 +162,19 @@
       btn.classList.toggle('active', btn.dataset.bg === key);
     });
 
-    // Mostra o nascondi la ghost-text solo con bg1
-    const ghostText = document.querySelector('.ghost-text');
+    // Gestione visibilità frasi ghost
+    const ghost1 = document.getElementById('ghostText1');
+    const ghost4 = document.getElementById('ghostText4');
+
     if (key === 'bg1') {
-      ghostText.style.display = 'block';
+      ghost1.style.display = 'block';
+      ghost4.style.display = 'none';
+    } else if (key === 'bg4') {
+      ghost1.style.display = 'none';
+      ghost4.style.display = 'block';
     } else {
-      ghostText.style.display = 'none';
+      ghost1.style.display = 'none';
+      ghost4.style.display = 'none';
     }
   }
 
