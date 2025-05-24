@@ -84,6 +84,7 @@
       line-height: 1.4;
       z-index: 9999;
       transition: color 0.3s ease;
+      display: none; /* nascosta di default */
     }
 
     .ghost-text:hover {
@@ -127,6 +128,14 @@
     buttons.forEach(btn => {
       btn.classList.toggle('active', btn.dataset.bg === key);
     });
+
+    // Mostra o nascondi la ghost-text solo con bg1
+    const ghostText = document.querySelector('.ghost-text');
+    if (key === 'bg1') {
+      ghostText.style.display = 'block';
+    } else {
+      ghostText.style.display = 'none';
+    }
   }
 
   buttons.forEach(btn => {
