@@ -69,7 +69,7 @@
       color: #ccc;
     }
 
-    /* Effetto ghost per le frasi */
+    /* Effetto ghost per la prima frase */
     .ghost-text {
       position: fixed;
       top: 20px;
@@ -85,11 +85,28 @@
       z-index: 9999;
       transition: color 0.3s ease;
       display: none; /* nascosta di default */
-      white-space: pre-line; /* per interpretare i ritorni a capo */
+      white-space: pre-line;
     }
 
     .ghost-text:hover {
       color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Frase normale per l'ultimo sfondo */
+    .normal-text {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-family: 'Georgia', serif;
+      font-size: 14px;
+      color: white;          /* testo pieno, non trasparente */
+      max-width: 280px;
+      text-align: right;
+      user-select: text;     /* selezionabile col mouse */
+      pointer-events: auto;  /* abilita interazione */
+      line-height: 1.4;
+      z-index: 9999;
+      white-space: pre-line;
     }
 
     /* Colori personalizzati per la frase giapponese */
@@ -134,8 +151,8 @@
   We´ll be fine — sleep well, Athena.
 </div>
 
-<!-- Seconda frase con colori diversi -->
-<div id="ghostText4" class="ghost-text">
+<!-- Seconda frase con colori diversi, ora normale e selezionabile -->
+<div id="ghostText4" class="normal-text">
   <span class="jp-kanji">息をしたくて ここは苦しくて</span><br>
   <span class="jp-romaji">iki wo shitakute koko wa kurushikute</span><br>
   <span class="jp-kanji">闇を見上げるだけの夜は もがく減圧症のダイバー</span><br>
@@ -162,7 +179,7 @@
       btn.classList.toggle('active', btn.dataset.bg === key);
     });
 
-    // Gestione visibilità frasi ghost
+    // Gestione visibilità frasi
     const ghost1 = document.getElementById('ghostText1');
     const ghost4 = document.getElementById('ghostText4');
 
