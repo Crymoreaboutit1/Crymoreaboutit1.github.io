@@ -68,6 +68,27 @@
     .toggle-play:hover i {
       color: #ccc;
     }
+
+    /* Effetto ghost per la frase */
+    .ghost-text {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-family: 'Georgia', serif;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.15);
+      max-width: 280px;
+      text-align: right;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1.4;
+      z-index: 9999;
+      transition: color 0.3s ease;
+    }
+
+    .ghost-text:hover {
+      color: rgba(255, 255, 255, 0.4);
+    }
   </style>
 </head>
 <body>
@@ -83,7 +104,13 @@
   <i class="fa fa-play" id="playIcon"></i>
 </button>
 
-<audio id="backgroundAudio" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/blob/main/diver.mp3" loop></audio>
+<audio id="backgroundAudio" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/diver.mp3" loop></audio>
+
+<div class="ghost-text">
+  Though his light slipped into shadow,<br>
+  mine will never carry darkness.<br>
+  We´ll be fine — sleep well, Athena.
+</div>
 
 <script>
   const backgrounds = {
