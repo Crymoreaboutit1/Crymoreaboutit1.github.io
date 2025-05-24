@@ -108,32 +108,27 @@
       color: rgba(255, 50, 50, 0.5);
     }
 
-    #secretTrigger {
+    /* Punto segreto */
+    .secret-zone {
       position: fixed;
-      bottom: 10px;
-      left: 10px;
-      width: 30px;
-      height: 30px;
-      opacity: 0.05;
-      z-index: 99999;
+      top: 20%;
+      left: 20%;
+      width: 40px;
+      height: 40px;
+      z-index: 9999;
       cursor: pointer;
-      display: none; /* visibile solo per bg1 */
     }
 
-    #visibleText4 {
+    .heart {
       position: fixed;
-      top: 20px;
-      right: 20px;
-      font-family: 'Georgia', serif;
-      font-size: 14px;
-      color: white;
-      max-width: 280px;
-      text-align: right;
-      user-select: text;
-      line-height: 1.4;
-      z-index: 9999;
-      white-space: pre-line;
-      display: none;
+      top: 20%;
+      left: 20%;
+      font-size: 32px;
+      color: red;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 10000;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -152,74 +147,16 @@
 
 <audio id="backgroundAudio" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/diver.mp3" loop></audio>
 
-<!-- Frasi -->
+<!-- Prima frase -->
 <div id="ghostText1" class="ghost-text">
   Though his light slipped into shadow,<br>
   mine will never carry darkness.<br>
   We´ll be fine — sleep well, Athena.
 </div>
 
-<div id="visibleText4">
-  息をしたくて ここは苦しくて<br>
-  iki wo shitakute koko wa kurushikute<br>
-  闇を見上げるだけの夜は もがく減圧症のダイバー<br>
-  yami wo miageru dake no yoru wa, mogaku gen’atsushou no daibaa<br>
-  生きているんだって 確かめたくて<br>
-  ikite iru’ndatte tashikametakute<br>
-  深い海底を目指してもう一度 呼吸をしよう<br>
-  fukai kaitei wo mezashite mou ichido kokyuu wo shiyou
-</div>
-
-<a href="https://xatimg.com/image/wdP32DMgGg3K" target="_blank" id="secretTrigger" title="Segreto"></a>
-
-<script>
-  const backgrounds = {
-    bg1: 'https://xatimg.com/image/X6fvbO6sgUut.jpg',
-    bg2: 'https://xatimg.com/image/hGwZ3BYG7Hjl.png',
-    bg3: 'https://xatimg.com/image/ikuSQk3oNX30.jpg',
-    bg4: 'https://xatimg.com/image/y5YJDHCtfOUO.png',
-  };
-
-  const buttons = document.querySelectorAll('.buttons-container button');
-  const ghost1 = document.getElementById('ghostText1');
-  const visibleText4 = document.getElementById('visibleText4');
-  const secretTrigger = document.getElementById('secretTrigger');
-
-  function setBackground(key) {
-    document.body.style.backgroundImage = `url('${backgrounds[key]}')`;
-    buttons.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.bg === key);
-    });
-
-    ghost1.style.display = (key === 'bg1') ? 'block' : 'none';
-    visibleText4.style.display = (key === 'bg4') ? 'block' : 'none';
-    secretTrigger.style.display = (key === 'bg1') ? 'block' : 'none';
-  }
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      setBackground(btn.dataset.bg);
-    });
-  });
-
-  setBackground('bg1');
-
-  const audio = document.getElementById("backgroundAudio");
-  const toggleBtn = document.getElementById("togglePlayBtn");
-  const playIcon = document.getElementById("playIcon");
-
-  toggleBtn.addEventListener("click", () => {
-    if (audio.paused) {
-      audio.play();
-      playIcon.classList.remove("fa-play");
-      playIcon.classList.add("fa-pause");
-    } else {
-      audio.pause();
-      playIcon.classList.remove("fa-pause");
-      playIcon.classList.add("fa-play");
-    }
-  });
-</script>
-
-</body>
-</html>
+<!-- Seconda frase visibile e copiabile -->
+<div id="ghostText4" class="ghost-text" style="user-select: text; pointer-events: auto;">
+  <span class="jp-kanji">息をしたくて ここは苦しくて</span><br>
+  <span class="jp-romaji">iki wo shitakute koko wa kurushikute</span><br>
+  <span class="jp-kanji">闇を見上げるだけの夜は もがく減圧症のダイバー</span><br>
+  <span class="jp-ro
