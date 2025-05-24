@@ -159,4 +159,79 @@
   <span class="jp-kanji">息をしたくて ここは苦しくて</span><br>
   <span class="jp-romaji">iki wo shitakute koko wa kurushikute</span><br>
   <span class="jp-kanji">闇を見上げるだけの夜は もがく減圧症のダイバー</span><br>
-  <span class="jp-ro
+  <span class="jp-romaji">yami wo miageru dake no yoru wa, mogaku gen’atsushou no daibaa</span><br>
+  <span class="jp-kanji">生きているんだって 確かめたくて</span><br>
+  <span class="jp-romaji">ikite iru’ndatte tashikametakute</span><br>
+  <span class="jp-kanji">深い海底を目指してもう一度 呼吸をしよう</span><br>
+  <span class="jp-romaji">fukai kaitei wo mezashite mou ichido kokyuu wo shiyou</span>
+</div>
+
+<!-- Punto segreto solo per sfondo 1 -->
+<div class="secret-zone" id="secretZone" style="display: none;"></div>
+<div class="heart" id="heart">❤️</div>
+<a href="https://xatimg.com/image/wdP32DMgGg3K.jpg" id="secretTrigger" style="display: none;" target="_blank"></a>
+
+<script>
+  const backgrounds = {
+    bg1: 'https://xatimg.com/image/X6fvbO6sgUut.jpg',
+    bg2: 'https://xatimg.com/image/hGwZ3BYG7Hjl.png',
+    bg3: 'https://xatimg.com/image/ikuSQk3oNX30.jpg',
+    bg4: 'https://xatimg.com/image/y5YJDHCtfOUO.png',
+  };
+
+  const buttons = document.querySelectorAll('.buttons-container button');
+  const ghost1 = document.getElementById('ghostText1');
+  const ghost4 = document.getElementById('ghostText4');
+  const secretZone = document.getElementById('secretZone');
+  const heart = document.getElementById('heart');
+  const secretTrigger = document.getElementById('secretTrigger');
+
+  function setBackground(key) {
+    document.body.style.backgroundImage = `url('${backgrounds[key]}')`;
+    buttons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.bg === key);
+    });
+
+    // Frasi
+    ghost1.style.display = key === 'bg1' ? 'block' : 'none';
+    ghost4.style.display = key === 'bg4' ? 'block' : 'none';
+
+    // Punto segreto solo nello sfondo 1
+    secretZone.style.display = key === 'bg1' ? 'block' : 'none';
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      setBackground(btn.dataset.bg);
+    });
+  });
+
+  setBackground('bg1');
+
+  const audio = document.getElementById("backgroundAudio");
+  const toggleBtn = document.getElementById("togglePlayBtn");
+  const playIcon = document.getElementById("playIcon");
+
+  toggleBtn.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
+      playIcon.classList.remove("fa-play");
+      playIcon.classList.add("fa-pause");
+    } else {
+      audio.pause();
+      playIcon.classList.remove("fa-pause");
+      playIcon.classList.add("fa-play");
+    }
+  });
+
+  secretZone.addEventListener('click', () => {
+    heart.style.opacity = 1;
+    setTimeout(() => {
+      heart.style.opacity = 0;
+      secretTrigger.click();
+    }, 2000);
+  });
+</script>
+
+</body>
+</html>
