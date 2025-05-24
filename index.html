@@ -109,26 +109,47 @@
     }
 
     /* Punto segreto */
-    .secret-zone {
+    .secret-trigger {
       position: fixed;
-      top: 20%;
-      left: 20%;
-      width: 40px;
-      height: 40px;
-      z-index: 9999;
+      bottom: 20px;
+      left: 20px;
+      width: 20px;
+      height: 20px;
+      opacity: 0;
       cursor: pointer;
+      z-index: 99999;
     }
 
-    .heart {
+    /* Cuore animato */
+    .heart-popup {
       position: fixed;
-      top: 20%;
-      left: 20%;
-      font-size: 32px;
-      color: red;
+      bottom: 40px;
+      left: 40px;
+      font-size: 24px;
+      color: pink;
       opacity: 0;
-      transition: opacity 0.5s ease;
-      z-index: 10000;
-      pointer-events: none;
+      animation: fadeOutUp 2s ease forwards;
+      z-index: 99999;
+    }
+
+    @keyframes fadeOutUp {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-40px); }
+    }
+
+    /* Frase visibile nello sfondo 4 */
+    .visible-quote {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-family: 'Georgia', serif;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 280px;
+      text-align: right;
+      line-height: 1.4;
+      z-index: 9999;
+      white-space: pre-line;
     }
   </style>
 </head>
@@ -147,15 +168,15 @@
 
 <audio id="backgroundAudio" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/diver.mp3" loop></audio>
 
-<!-- Prima frase -->
+<!-- Ghost text sfondo 1 -->
 <div id="ghostText1" class="ghost-text">
   Though his light slipped into shadow,<br>
   mine will never carry darkness.<br>
   We´ll be fine — sleep well, Athena.
 </div>
 
-<!-- Seconda frase visibile e copiabile -->
-<div id="ghostText4" class="ghost-text" style="user-select: text; pointer-events: auto;">
+<!-- Frase visibile e copiabile sfondo 4 -->
+<div id="ghostText4" class="visible-quote" style="display: none;">
   <span class="jp-kanji">息をしたくて ここは苦しくて</span><br>
   <span class="jp-romaji">iki wo shitakute koko wa kurushikute</span><br>
   <span class="jp-kanji">闇を見上げるだけの夜は もがく減圧症のダイバー</span><br>
@@ -166,10 +187,11 @@
   <span class="jp-romaji">fukai kaitei wo mezashite mou ichido kokyuu wo shiyou</span>
 </div>
 
-<!-- Punto segreto solo per sfondo 1 -->
-<div class="secret-zone" id="secretZone" style="display: none;"></div>
-<div class="heart" id="heart">❤️</div>
-<a href="https://xatimg.com/image/wdP32DMgGg3K.jpg" id="secretTrigger" style="display: none;" target="_blank"></a>
+<!-- Punto segreto -->
+<a href="https://xatimg.com/image/wdP32DMgGg3K" id="secretTrigger" class="secret-trigger" style="display: none;"></a>
+
+<!-- Cuore -->
+<div id="heartPopup" class="heart-popup" style="display: none;">❤️</div>
 
 <script>
   const backgrounds = {
@@ -180,11 +202,6 @@
   };
 
   const buttons = document.querySelectorAll('.buttons-container button');
-  const ghost1 = document.getElementById('ghostText1');
-  const ghost4 = document.getElementById('ghostText4');
-  const secretZone = document.getElementById('secretZone');
-  const heart = document.getElementById('heart');
-  const secretTrigger = document.getElementById('secretTrigger');
 
   function setBackground(key) {
     document.body.style.backgroundImage = `url('${backgrounds[key]}')`;
@@ -192,12 +209,9 @@
       btn.classList.toggle('active', btn.dataset.bg === key);
     });
 
-    // Frasi
-    ghost1.style.display = key === 'bg1' ? 'block' : 'none';
-    ghost4.style.display = key === 'bg4' ? 'block' : 'none';
-
-    // Punto segreto solo nello sfondo 1
-    secretZone.style.display = key === 'bg1' ? 'block' : 'none';
+    document.getElementById('ghostText1').style.display = key === 'bg1' ? 'block' : 'none';
+    document.getElementById('ghostText4').style.display = key === 'bg4' ? 'block' : 'none';
+    document.getElementById('secretTrigger').style.display = key === 'bg1' ? 'block' : 'none';
   }
 
   buttons.forEach(btn => {
@@ -224,12 +238,16 @@
     }
   });
 
-  secretZone.addEventListener('click', () => {
-    heart.style.opacity = 1;
+  // Punto segreto con cuore
+  const secretTrigger = document.getElementById('secretTrigger');
+  secretTrigger.addEventListener('click', (e) => {
+    const heart = document.getElementById("heartPopup");
+    heart.style.display = 'block';
     setTimeout(() => {
-      heart.style.opacity = 0;
-      secretTrigger.click();
+      heart.style.display = 'none';
+      window.open(secretTrigger.href, '_blank');
     }, 2000);
+    e.preventDefault();
   });
 </script>
 
