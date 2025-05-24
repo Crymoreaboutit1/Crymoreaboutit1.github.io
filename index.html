@@ -16,6 +16,8 @@
       background-position: center;
       background-size: contain;
       transition: background-image 0.5s ease-in-out;
+      font-family: Arial, sans-serif;
+      color: white;
     }
 
     .buttons-container {
@@ -36,6 +38,7 @@
       cursor: pointer;
       font-weight: bold;
       transition: background 0.3s ease;
+      color: black;
     }
 
     .buttons-container button:hover {
@@ -69,139 +72,54 @@
       color: #ccc;
     }
 
-    /* Effetto ghost per le frasi */
+    /* Ghost text base */
     .ghost-text {
       position: fixed;
-      top: 20px;
+      max-width: 320px;
       right: 20px;
-      font-family: 'Georgia', serif;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.15);
-      max-width: 280px;
-      text-align: right;
-      pointer-events: none;
-      user-select: none;
-      line-height: 1.4;
+      padding: 12px 15px;
+      border-radius: 10px;
+      font-size: 16px;
+      line-height: 1.5;
       z-index: 9999;
-      transition: color 0.3s ease;
-      display: none; /* nascosta di default */
-      white-space: pre-line; /* per interpretare i ritorni a capo */
+      background: rgba(0,0,0,0.6);
+      user-select: text;
+      cursor: text;
+      display: none;
+      white-space: pre-line;
+      box-shadow: 0 0 10px rgba(0,0,0,0.7);
     }
 
-    .ghost-text:hover {
-      color: rgba(255, 255, 255, 0.4);
-    }
-
-    /* Colori personalizzati per la frase giapponese */
-    .jp-kanji {
-      color: rgba(255, 255, 255, 0.15);
-    }
-
-    .jp-romaji {
-      color: rgba(255, 50, 50, 0.15);
+    /* Specific position for first ghost text */
+    #ghostText1 {
+      top: 20px;
+      color: rgba(255,255,255,0.85);
       font-style: italic;
+      font-family: 'Georgia', serif;
+      text-align: right;
+      background: rgba(0,0,0,0.4);
+      user-select: text;
     }
 
-    /* Al passaggio mouse intensifica i colori */
-    .jp-kanji:hover {
-      color: rgba(255, 255, 255, 0.5);
+    /* Specific styles for last ghost text */
+    #ghostText4 {
+      bottom: 30px;
+      font-family: 'Georgia', serif;
+      color: white;
     }
 
-    .jp-romaji:hover {
-      color: rgba(255, 50, 50, 0.5);
+    /* Japanese kanji - bianco brillante */
+    #ghostText4 .jp-kanji {
+      color: white;
+      font-weight: 600;
+    }
+
+    /* Romaji - rosso acceso e leggibile */
+    #ghostText4 .jp-romaji {
+      color: #ff5555;
+      font-style: italic;
+      font-weight: 500;
     }
   </style>
 </head>
 <body>
-
-<div class="buttons-container">
-  <button data-bg="bg1" class="active">Sfondo 1</button>
-  <button data-bg="bg2">Sfondo 2</button>
-  <button data-bg="bg3">Eeepy</button>
-  <button data-bg="bg4">Sfondo 4</button>
-</div>
-
-<button class="toggle-play" id="togglePlayBtn">
-  <i class="fa fa-play" id="playIcon"></i>
-</button>
-
-<audio id="backgroundAudio" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/diver.mp3" loop></audio>
-
-<!-- Prima frase -->
-<div id="ghostText1" class="ghost-text">
-  Though his light slipped into shadow,<br>
-  mine will never carry darkness.<br>
-  We´ll be fine — sleep well, Athena.
-</div>
-
-<!-- Seconda frase con colori diversi -->
-<div id="ghostText4" class="ghost-text">
-  <span class="jp-kanji">息をしたくて ここは苦しくて</span><br>
-  <span class="jp-romaji">iki wo shitakute koko wa kurushikute</span><br>
-  <span class="jp-kanji">闇を見上げるだけの夜は もがく減圧症のダイバー</span><br>
-  <span class="jp-romaji">yami wo miageru dake no yoru wa, mogaku gen’atsushou no daibaa</span><br>
-  <span class="jp-kanji">生きているんだって 確かめたくて</span><br>
-  <span class="jp-romaji">ikite iru’ndatte tashikametakute</span><br>
-  <span class="jp-kanji">深い海底を目指してもう一度 呼吸をしよう</span><br>
-  <span class="jp-romaji">fukai kaitei wo mezashite mou ichido kokyuu wo shiyou</span>
-</div>
-
-<script>
-  const backgrounds = {
-    bg1: 'https://xatimg.com/image/X6fvbO6sgUut.jpg',
-    bg2: 'https://xatimg.com/image/hGwZ3BYG7Hjl.png',
-    bg3: 'https://xatimg.com/image/ikuSQk3oNX30.jpg',
-    bg4: 'https://xatimg.com/image/y5YJDHCtfOUO.png',
-  };
-
-  const buttons = document.querySelectorAll('.buttons-container button');
-
-  function setBackground(key) {
-    document.body.style.backgroundImage = `url('${backgrounds[key]}')`;
-    buttons.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.bg === key);
-    });
-
-    // Gestione visibilità frasi ghost
-    const ghost1 = document.getElementById('ghostText1');
-    const ghost4 = document.getElementById('ghostText4');
-
-    if (key === 'bg1') {
-      ghost1.style.display = 'block';
-      ghost4.style.display = 'none';
-    } else if (key === 'bg4') {
-      ghost1.style.display = 'none';
-      ghost4.style.display = 'block';
-    } else {
-      ghost1.style.display = 'none';
-      ghost4.style.display = 'none';
-    }
-  }
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      setBackground(btn.dataset.bg);
-    });
-  });
-
-  setBackground('bg1');
-
-  const audio = document.getElementById("backgroundAudio");
-  const toggleBtn = document.getElementById("togglePlayBtn");
-  const playIcon = document.getElementById("playIcon");
-
-  toggleBtn.addEventListener("click", () => {
-    if (audio.paused) {
-      audio.play();
-      playIcon.classList.remove("fa-play");
-      playIcon.classList.add("fa-pause");
-    } else {
-      audio.pause();
-      playIcon.classList.remove("fa-pause");
-      playIcon.classList.add("fa-play");
-    }
-  });
-</script>
-
-</body>
-</html>
