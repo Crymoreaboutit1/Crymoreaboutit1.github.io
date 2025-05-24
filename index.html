@@ -16,8 +16,6 @@
       background-position: center;
       background-size: contain;
       transition: background-image 0.5s ease-in-out;
-      font-family: Arial, sans-serif;
-      color: white;
     }
 
     .buttons-container {
@@ -38,7 +36,6 @@
       cursor: pointer;
       font-weight: bold;
       transition: background 0.3s ease;
-      color: black;
     }
 
     .buttons-container button:hover {
@@ -72,54 +69,53 @@
       color: #ccc;
     }
 
-    /* Ghost text base */
+    /* Effetto ghost per le frasi */
     .ghost-text {
       position: fixed;
-      max-width: 320px;
+      top: 20px;
       right: 20px;
+      font-family: 'Georgia', serif;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.15);
+      max-width: 280px;
+      text-align: right;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1.4;
+      z-index: 9999;
+      transition: color 0.3s ease;
+      display: none; /* nascosta di default */
+      white-space: pre-line; /* per interpretare i ritorni a capo */
+    }
+
+    .ghost-text:hover {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Colori personalizzati per la frase giapponese */
+    #ghostText4 {
+      top: auto;
+      bottom: 20px;
+      right: 20px;
+      max-width: 320px;
+      text-align: left;
+      color: rgba(255, 255, 255, 0.9);
+      pointer-events: auto;
+      user-select: text;
+      font-size: 16px;
+      line-height: 1.6;
+      background: rgba(0,0,0,0.5);
       padding: 12px 15px;
       border-radius: 10px;
-      font-size: 16px;
-      line-height: 1.5;
-      z-index: 9999;
-      background: rgba(0,0,0,0.6);
-      user-select: text;
-      cursor: text;
-      display: none;
-      white-space: pre-line;
-      box-shadow: 0 0 10px rgba(0,0,0,0.7);
     }
 
-    /* Specific position for first ghost text */
-    #ghostText1 {
-      top: 20px;
-      color: rgba(255,255,255,0.85);
-      font-style: italic;
-      font-family: 'Georgia', serif;
-      text-align: right;
-      background: rgba(0,0,0,0.4);
-      user-select: text;
-    }
-
-    /* Specific styles for last ghost text */
-    #ghostText4 {
-      bottom: 30px;
-      font-family: 'Georgia', serif;
-      color: white;
-    }
-
-    /* Japanese kanji - bianco brillante */
     #ghostText4 .jp-kanji {
       color: white;
       font-weight: 600;
     }
 
-    /* Romaji - rosso acceso e leggibile */
     #ghostText4 .jp-romaji {
-      color: #ff5555;
+      color: #ff4444;
       font-style: italic;
       font-weight: 500;
-    }
-  </style>
-</head>
-<body>
+
