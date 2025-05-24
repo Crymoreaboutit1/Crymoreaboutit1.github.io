@@ -69,7 +69,6 @@
       color: #ccc;
     }
 
-    /* Effetto ghost per la prima frase */
     .ghost-text {
       position: fixed;
       top: 20px;
@@ -84,7 +83,7 @@
       line-height: 1.4;
       z-index: 9999;
       transition: color 0.3s ease;
-      display: none; /* nascosta di default */
+      display: none;
       white-space: pre-line;
     }
 
@@ -92,24 +91,6 @@
       color: rgba(255, 255, 255, 0.4);
     }
 
-    /* Frase normale per l'ultimo sfondo */
-    .normal-text {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      font-family: 'Georgia', serif;
-      font-size: 14px;
-      color: white;          /* testo pieno, non trasparente */
-      max-width: 280px;
-      text-align: right;
-      user-select: text;     /* selezionabile col mouse */
-      pointer-events: auto;  /* abilita interazione */
-      line-height: 1.4;
-      z-index: 9999;
-      white-space: pre-line;
-    }
-
-    /* Colori personalizzati per la frase giapponese */
     .jp-kanji {
       color: rgba(255, 255, 255, 0.15);
     }
@@ -119,13 +100,40 @@
       font-style: italic;
     }
 
-    /* Al passaggio mouse intensifica i colori */
     .jp-kanji:hover {
       color: rgba(255, 255, 255, 0.5);
     }
 
     .jp-romaji:hover {
       color: rgba(255, 50, 50, 0.5);
+    }
+
+    #secretTrigger {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      width: 30px;
+      height: 30px;
+      opacity: 0.05;
+      z-index: 99999;
+      cursor: pointer;
+      display: none; /* visibile solo per bg1 */
+    }
+
+    #visibleText4 {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-family: 'Georgia', serif;
+      font-size: 14px;
+      color: white;
+      max-width: 280px;
+      text-align: right;
+      user-select: text;
+      line-height: 1.4;
+      z-index: 9999;
+      white-space: pre-line;
+      display: none;
     }
   </style>
 </head>
@@ -144,24 +152,25 @@
 
 <audio id="backgroundAudio" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/diver.mp3" loop></audio>
 
-<!-- Prima frase -->
+<!-- Frasi -->
 <div id="ghostText1" class="ghost-text">
   Though his light slipped into shadow,<br>
   mine will never carry darkness.<br>
   We´ll be fine — sleep well, Athena.
 </div>
 
-<!-- Seconda frase con colori diversi, ora normale e selezionabile -->
-<div id="ghostText4" class="normal-text">
-  <span class="jp-kanji">息をしたくて ここは苦しくて</span><br>
-  <span class="jp-romaji">iki wo shitakute koko wa kurushikute</span><br>
-  <span class="jp-kanji">闇を見上げるだけの夜は もがく減圧症のダイバー</span><br>
-  <span class="jp-romaji">yami wo miageru dake no yoru wa, mogaku gen’atsushou no daibaa</span><br>
-  <span class="jp-kanji">生きているんだって 確かめたくて</span><br>
-  <span class="jp-romaji">ikite iru’ndatte tashikametakute</span><br>
-  <span class="jp-kanji">深い海底を目指してもう一度 呼吸をしよう</span><br>
-  <span class="jp-romaji">fukai kaitei wo mezashite mou ichido kokyuu wo shiyou</span>
+<div id="visibleText4">
+  息をしたくて ここは苦しくて<br>
+  iki wo shitakute koko wa kurushikute<br>
+  闇を見上げるだけの夜は もがく減圧症のダイバー<br>
+  yami wo miageru dake no yoru wa, mogaku gen’atsushou no daibaa<br>
+  生きているんだって 確かめたくて<br>
+  ikite iru’ndatte tashikametakute<br>
+  深い海底を目指してもう一度 呼吸をしよう<br>
+  fukai kaitei wo mezashite mou ichido kokyuu wo shiyou
 </div>
+
+<a href="https://xatimg.com/image/wdP32DMgGg3K" target="_blank" id="secretTrigger" title="Segreto"></a>
 
 <script>
   const backgrounds = {
@@ -172,6 +181,9 @@
   };
 
   const buttons = document.querySelectorAll('.buttons-container button');
+  const ghost1 = document.getElementById('ghostText1');
+  const visibleText4 = document.getElementById('visibleText4');
+  const secretTrigger = document.getElementById('secretTrigger');
 
   function setBackground(key) {
     document.body.style.backgroundImage = `url('${backgrounds[key]}')`;
@@ -179,20 +191,9 @@
       btn.classList.toggle('active', btn.dataset.bg === key);
     });
 
-    // Gestione visibilità frasi
-    const ghost1 = document.getElementById('ghostText1');
-    const ghost4 = document.getElementById('ghostText4');
-
-    if (key === 'bg1') {
-      ghost1.style.display = 'block';
-      ghost4.style.display = 'none';
-    } else if (key === 'bg4') {
-      ghost1.style.display = 'none';
-      ghost4.style.display = 'block';
-    } else {
-      ghost1.style.display = 'none';
-      ghost4.style.display = 'none';
-    }
+    ghost1.style.display = (key === 'bg1') ? 'block' : 'none';
+    visibleText4.style.display = (key === 'bg4') ? 'block' : 'none';
+    secretTrigger.style.display = (key === 'bg1') ? 'block' : 'none';
   }
 
   buttons.forEach(btn => {
