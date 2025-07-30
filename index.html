@@ -1,336 +1,235 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>KuloKiLegge</title>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
-  <style>
-    html, body {
-      margin: 0; padding: 0; height: 100%;
-      background-color: #222;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-      transition: background-image 0.5s ease-in-out;
-    }
+<!DOCTYPE html>  <html lang="it">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1" />  
+  <title>KuloKiLegge</title>  
+  <link  
+    rel="stylesheet"  
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"  
+  />  
+  <style>  
+    html, body {  
+      margin: 0; padding: 0; height: 100%;  
+      background-color: #222;  
+      background-repeat: no-repeat;  
+      background-position: center;  
+      background-size: contain;  
+      transition: background-image 0.5s ease-in-out;  
+    }  .buttons-container {  
+  position: fixed;  
+  bottom: 20px;  
+  left: 50%;  
+  transform: translateX(-50%);  
+  display: flex;  
+  gap: 15px;  
+  z-index: 1000;  
+}  
 
-    .buttons-container {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 15px;
-      z-index: 1000;
-    }
+.buttons-container button {  
+  padding: 10px 16px;  
+  border: none;  
+  border-radius: 6px;  
+  background: rgba(255,255,255,0.8);  
+  cursor: pointer;  
+  font-weight: bold;  
+  transition: background 0.3s ease;  
+}  
 
-    .buttons-container button {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 6px;
-      background: rgba(255,255,255,0.8);
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
+.buttons-container button:hover {  
+  background: rgba(0,0,0,0.8);  
+  color: white;  
+}  
 
-    .buttons-container button:hover {
-      background: rgba(0,0,0,0.8);
-      color: white;
-    }
+.buttons-container button.active {  
+  background: rgba(0,0,0,0.9);  
+  color: white;  
+}  
 
-    .buttons-container button.active {
-      background: rgba(0,0,0,0.9);
-      color: white;
-    }
+.toggle-play {  
+  position: fixed;  
+  bottom: 50px;  
+  right: 50px;  
+  z-index: 12000;  
+  border: none;  
+  outline: none;  
+  background: none;  
+  color: white;  
+  cursor: pointer;  
+}  
 
-    .toggle-play {
-      position: fixed;
-      bottom: 50px;
-      right: 50px;
-      z-index: 12000;
-      border: none;
-      outline: none;
-      background: none;
-      color: white;
-      cursor: pointer;
-    }
+.toggle-play i {  
+  font-size: 32px;  
+  transition: color 0.3s ease;  
+}  
 
-    .toggle-play i {
-      font-size: 32px;
-      transition: color 0.3s ease;
-    }
+.toggle-play:hover i {  
+  color: #ccc;  
+}  
 
-    .toggle-play:hover i {
-      color: #ccc;
-    }
+.ghost-text {  
+  position: fixed;  
+  top: 20px;  
+  right: 20px;  
+  font-family: 'Georgia', serif;  
+  font-size: 14px;  
+  color: rgba(255, 255, 255, 0.15);  
+  max-width: 280px;  
+  text-align: right;  
+  pointer-events: none;  
+  user-select: none;  
+  line-height: 1.4;  
+  z-index: 9999;  
+  transition: color 0.3s ease;  
+  display: none;  
+  white-space: pre-line;  
+}  
 
-    .ghost-text {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      font-family: 'Georgia', serif;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.15);
-      max-width: 280px;
-      text-align: right;
-      pointer-events: none;
-      user-select: none;
-      line-height: 1.4;
-      z-index: 9999;
-      transition: color 0.3s ease;
-      display: none;
-      white-space: pre-line;
-    }
+.ghost-text:hover {  
+  color: rgba(255, 255, 255, 0.4);  
+}  
 
-    .ghost-text:hover {
-      color: rgba(255, 255, 255, 0.4);
-    }
+.jp-kanji {  
+  color: rgba(255, 255, 255, 0.15);  
+}  
 
-    .jp-kanji {
-      color: rgba(255, 255, 255, 0.15);
-    }
+.jp-romaji {  
+  color: rgba(255, 50, 50, 0.15);  
+  font-style: italic;  
+}  
 
-    .jp-romaji {
-      color: rgba(255, 50, 50, 0.15);
-      font-style: italic;
-    }
+.jp-kanji:hover {  
+  color: rgba(255, 255, 255, 0.5);  
+}  
 
-    .jp-kanji:hover {
-      color: rgba(255, 255, 255, 0.5);
-    }
+.jp-romaji:hover {  
+  color: rgba(255, 50, 50, 0.5);  
+}  
 
-    .jp-romaji:hover {
-      color: rgba(255, 50, 50, 0.5);
-    }
+/* Punto segreto */  
+.secret-trigger {  
+  position: fixed;  
+  bottom: 20px;  
+  left: 20px;  
+  width: 20px;  
+  height: 20px;  
+  opacity: 0;  
+  cursor: pointer;  
+  z-index: 99999;  
+}  
 
-    /* Punto segreto */
-    .secret-trigger {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      width: 20px;
-      height: 20px;
-      opacity: 0;
-      cursor: pointer;
-      z-index: 99999;
-    }
+/* Cuore animato */  
+.heart-popup {  
+  position: fixed;  
+  bottom: 40px;  
+  left: 40px;  
+  font-size: 24px;  
+  color: pink;  
+  opacity: 0;  
+  animation: fadeOutUp 2s ease forwards;  
+  z-index: 99999;  
+}  
 
-    /* Cuore animato */
-    .heart-popup {
-      position: fixed;
-      bottom: 40px;
-      left: 40px;
-      font-size: 24px;
-      color: pink;
-      opacity: 0;
-      animation: fadeOutUp 2s ease forwards;
-      z-index: 99999;
-    }
+@keyframes fadeOutUp {  
+  0% { opacity: 1; transform: translateY(0); }  
+  100% { opacity: 0; transform: translateY(-40px); }  
+}  
 
-    @keyframes fadeOutUp {
-      0% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-40px); }
-    }
-
-    /* Frase visibile nello sfondo 4 */
-    .visible-quote {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      font-family: 'Georgia', serif;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.8);
-      max-width: 280px;
-      text-align: right;
-      line-height: 1.4;
-      z-index: 9999;
-      white-space: pre-line;
-    }
-  </style>
-</head>
-<body>
-const backgrounds = {
-  bg1: 'https://xatimg.com/image/MFxUl9SBfs6s.gif',
-  bg2: 'https://xatimg.com/image/hGwZ3BYG7Hjl.png',
-  bg3: 'https://xatimg.com/image/ikuSQk3oNX30.jpg',
-  bg4: 'https://xatimg.com/image/y5YJDHCtfOUO.png',
-};
-
-const buttons = document.querySelectorAll('.buttons-container button');
-
-// Tutti gli audio in un oggetto
-const audios = {
-  bg1: document.getElementById('audio-bg1'),
-  bg2: document.getElementById('audio-bg2'),
-  bg3: document.getElementById('audio-bg3'),
-  bg4: document.getElementById('audio-bg4'),
-};
-
-let currentBg = 'bg1';       // sfondo iniziale
-let isPlaying = false;       // stato audio
-
-function setBackground(key) {
-  // Cambia immagine di sfondo
-  document.body.style.backgroundImage = `url('${backgrounds[key]}')`;
-
-  // Evidenzia il bottone attivo
-  buttons.forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.bg === key);
-  });
-
-  // Mostra o nascondi testi ghost
-  document.getElementById('ghostText1').style.display = key === 'bg1' ? 'block' : 'none';
-  document.getElementById('ghostText4').style.display = key === 'bg4' ? 'block' : 'none';
-
-  // Punto segreto visibile solo su bg1
-  document.getElementById('secretTrigger').style.display = key === 'bg1' ? 'block' : 'none';
-
-  // Stoppa tutte le tracce
-  Object.values(audios).forEach(audio => {
-    audio.pause();
-    audio.currentTime = 0;
-  });
-
-  // Se stava suonando, fai partire l’audio del nuovo sfondo
-  if (isPlaying) {
-    audios[key].play();
-  }
-
-  currentBg = key;
+/* Frase visibile nello sfondo 4 */  
+.visible-quote {  
+  position: fixed;  
+  top: 20px;  
+  right: 20px;  
+  font-family: 'Georgia', serif;  
+  font-size: 14px;  
+  color: rgba(255, 255, 255, 0.8);  
+  max-width: 280px;  
+  text-align: right;  
+  line-height: 1.4;  
+  z-index: 9999;  
+  white-space: pre-line;  
 }
 
-// Al click su un bottone cambia sfondo
-buttons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    setBackground(btn.dataset.bg);
-  });
-});
+  </style>  
+</head>  
+<body>  <div class="buttons-container">  
+  <button data-bg="bg1" class="active">Sfondo 1</button>  
+  <button data-bg="bg2">Sfondo 2</button>  
+  <button data-bg="bg3">Eeepy</button>  
+  <button data-bg="bg4">Sfondo 4</button>  
+</div>  <button class="toggle-play" id="togglePlayBtn">  
+  <i class="fa fa-play" id="playIcon"></i>  
+</button>  <audio id="backgroundAudio" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/diver.mp3" loop></audio>
 
-// Bottone play/pause
-const toggleBtn = document.getElementById('togglePlayBtn');
-const playIcon = document.getElementById('playIcon');
+<!-- Ghost text sfondo 1 -->  <div id="ghostText1" class="ghost-text">  
+  Though his light slipped into shadow,<br>  
+  mine will never carry darkness.<br>  
+  We´ll be fine — sleep well, Athena.  
+</div>  <!-- Frase visibile e copiabile sfondo 4 -->  <div id="ghostText4" class="visible-quote" style="display: none;">  
+  <span class="jp-kanji">息をしたくて ここは苦しくて</span><br>  
+  <span class="jp-romaji">iki wo shitakute koko wa kurushikute</span><br>  
+  <span class="jp-kanji">闇を見上げるだけの夜は もがく減圧症のダイバー</span><br>  
+  <span class="jp-romaji">yami wo miageru dake no yoru wa, mogaku gen’atsushou no daibaa</span><br>  
+  <span class="jp-kanji">生きているんだって 確かめたくて</span><br>  
+  <span class="jp-romaji">ikite iru’ndatte tashikametakute</span><br>  
+  <span class="jp-kanji">深い海底を目指してもう一度 呼吸をしよう</span><br>  
+  <span class="jp-romaji">fukai kaitei wo mezashite mou ichido kokyuu wo shiyou</span>  
+</div>  <!-- Punto segreto -->  <a href="https://xatimg.com/image/wdP32DMgGg3K.jpg" id="secretTrigger" class="secret-trigger" style="display: none;"></a>
 
-toggleBtn.addEventListener('click', () => {
-  if (isPlaying) {
-    // Ferma audio attivo
-    audios[currentBg].pause();
-    isPlaying = false;
-    playIcon.classList.remove('fa-pause');
-    playIcon.classList.add('fa-play');
-  } else {
-    // Riproduci audio attivo
-    audios[currentBg].play();
-    isPlaying = true;
-    playIcon.classList.remove('fa-play');
-    playIcon.classList.add('fa-pause');
-  }
-});
-
-// Inizializza
-setBackground(currentBg);
-<div class="buttons-container">
-  <button data-bg="bg1" class="active">Sfondo 1</button>
-  <button data-bg="bg2">Sfondo 2</button>
-  <button data-bg="bg3">Eeepy</button>
-  <button data-bg="bg4">Sfondo 4</button>
-</div>
-
-<button class="toggle-play" id="togglePlayBtn">
-  <i class="fa fa-play" id="playIcon"></i>
-</button>
-
-<audio id="audio-bg1" src="diver.mp3" loop></audio>
-<audio id="audio-bg2" src="mononoke.mp3" loop></audio>
-<audio id="audio-bg3" src="bleach.mp3" loop></audio>
-<audio id="audio-bg4" src="music/song4.mp3" loop></audio>
-
-<!-- Ghost text sfondo 1 -->
-<div id="ghostText1" class="ghost-text">
-  Though his light slipped into shadow,<br>
-  mine will never carry darkness.<br>
-  We´ll be fine — sleep well, Athena.
-</div>
-
-<!-- Frase visibile e copiabile sfondo 4 -->
-<div id="ghostText4" class="visible-quote" style="display: none;">
-  <span class="jp-kanji">息をしたくて ここは苦しくて</span><br>
-  <span class="jp-romaji">iki wo shitakute koko wa kurushikute</span><br>
-  <span class="jp-kanji">闇を見上げるだけの夜は もがく減圧症のダイバー</span><br>
-  <span class="jp-romaji">yami wo miageru dake no yoru wa, mogaku gen’atsushou no daibaa</span><br>
-  <span class="jp-kanji">生きているんだって 確かめたくて</span><br>
-  <span class="jp-romaji">ikite iru’ndatte tashikametakute</span><br>
-  <span class="jp-kanji">深い海底を目指してもう一度 呼吸をしよう</span><br>
-  <span class="jp-romaji">fukai kaitei wo mezashite mou ichido kokyuu wo shiyou</span>
-</div>
-
-<!-- Punto segreto -->
-<a href="https://xatimg.com/image/wdP32DMgGg3K.jpg" id="secretTrigger" class="secret-trigger" style="display: none;"></a>
-
-<!-- Cuore -->
-<div id="heartPopup" class="heart-popup" style="display: none;">❤️</div>
-
-<script>
-  const backgrounds = {
-    bg1: 'https://xatimg.com/image/MFxUl9SBfs6s.gif',
-    bg2: 'https://xatimg.com/image/hGwZ3BYG7Hjl.png',
-    bg3: 'https://xatimg.com/image/ikuSQk3oNX30.jpg',
-    bg4: 'https://xatimg.com/image/y5YJDHCtfOUO.png',
-  };
-
-  const buttons = document.querySelectorAll('.buttons-container button');
-
-  function setBackground(key) {
-    document.body.style.backgroundImage = `url('${backgrounds[key]}')`;
-    buttons.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.bg === key);
-    });
-
-    document.getElementById('ghostText1').style.display = key === 'bg1' ? 'block' : 'none';
-    document.getElementById('ghostText4').style.display = key === 'bg4' ? 'block' : 'none';
-    document.getElementById('secretTrigger').style.display = key === 'bg1' ? 'block' : 'none';
-  }
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      setBackground(btn.dataset.bg);
-    });
-  });
-
-  setBackground('bg1');
-
-  const audio = document.getElementById("backgroundAudio");
-  const toggleBtn = document.getElementById("togglePlayBtn");
-  const playIcon = document.getElementById("playIcon");
-
-  toggleBtn.addEventListener("click", () => {
-    if (audio.paused) {
-      audio.play();
-      playIcon.classList.remove("fa-play");
-      playIcon.classList.add("fa-pause");
-    } else {
-      audio.pause();
-      playIcon.classList.remove("fa-pause");
-      playIcon.classList.add("fa-play");
-    }
-  });
-
-  // Punto segreto con cuore
-  const secretTrigger = document.getElementById('secretTrigger');
-  secretTrigger.addEventListener('click', (e) => {
-    const heart = document.getElementById("heartPopup");
-    heart.style.display = 'block';
-    setTimeout(() => {
-      heart.style.display = 'none';
-      window.open(secretTrigger.href, '_blank');
-    }, 2000);
-    e.preventDefault();
-  });
-</script>
-
-</body>
+<!-- Cuore -->  <div id="heartPopup" class="heart-popup" style="display: none;">❤️</div>  <script>  
+  const backgrounds = {  
+    bg1: 'https://xatimg.com/image/MFxUl9SBfs6s.gif',  
+    bg2: 'https://xatimg.com/image/hGwZ3BYG7Hjl.png',  
+    bg3: 'https://xatimg.com/image/ikuSQk3oNX30.jpg',  
+    bg4: 'https://xatimg.com/image/y5YJDHCtfOUO.png',  
+  };  
+  
+  const buttons = document.querySelectorAll('.buttons-container button');  
+  
+  function setBackground(key) {  
+    document.body.style.backgroundImage = `url('${backgrounds[key]}')`;  
+    buttons.forEach(btn => {  
+      btn.classList.toggle('active', btn.dataset.bg === key);  
+    });  
+  
+    document.getElementById('ghostText1').style.display = key === 'bg1' ? 'block' : 'none';  
+    document.getElementById('ghostText4').style.display = key === 'bg4' ? 'block' : 'none';  
+    document.getElementById('secretTrigger').style.display = key === 'bg1' ? 'block' : 'none';  
+  }  
+  
+  buttons.forEach(btn => {  
+    btn.addEventListener('click', () => {  
+      setBackground(btn.dataset.bg);  
+    });  
+  });  
+  
+  setBackground('bg1');  
+  
+  const audio = document.getElementById("backgroundAudio");  
+  const toggleBtn = document.getElementById("togglePlayBtn");  
+  const playIcon = document.getElementById("playIcon");  
+  
+  toggleBtn.addEventListener("click", () => {  
+    if (audio.paused) {  
+      audio.play();  
+      playIcon.classList.remove("fa-play");  
+      playIcon.classList.add("fa-pause");  
+    } else {  
+      audio.pause();  
+      playIcon.classList.remove("fa-pause");  
+      playIcon.classList.add("fa-play");  
+    }  
+  });  
+  
+  // Punto segreto con cuore  
+  const secretTrigger = document.getElementById('secretTrigger');  
+  secretTrigger.addEventListener('click', (e) => {  
+    const heart = document.getElementById("heartPopup");  
+    heart.style.display = 'block';  
+    setTimeout(() => {  
+      heart.style.display = 'none';  
+      window.open(secretTrigger.href, '_blank');  
+    }, 2000);  
+    e.preventDefault();  
+  });  
+</script>  </body>  
 </html>
