@@ -154,7 +154,85 @@
   </style>
 </head>
 <body>
+const backgrounds = {
+  bg1: 'https://xatimg.com/image/MFxUl9SBfs6s.gif',
+  bg2: 'https://xatimg.com/image/hGwZ3BYG7Hjl.png',
+  bg3: 'https://xatimg.com/image/ikuSQk3oNX30.jpg',
+  bg4: 'https://xatimg.com/image/y5YJDHCtfOUO.png',
+};
 
+const buttons = document.querySelectorAll('.buttons-container button');
+
+// Tutti gli audio in un oggetto
+const audios = {
+  bg1: document.getElementById('audio-bg1'),
+  bg2: document.getElementById('audio-bg2'),
+  bg3: document.getElementById('audio-bg3'),
+  bg4: document.getElementById('audio-bg4'),
+};
+
+let currentBg = 'bg1';       // sfondo iniziale
+let isPlaying = false;       // stato audio
+
+function setBackground(key) {
+  // Cambia immagine di sfondo
+  document.body.style.backgroundImage = `url('${backgrounds[key]}')`;
+
+  // Evidenzia il bottone attivo
+  buttons.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.bg === key);
+  });
+
+  // Mostra o nascondi testi ghost
+  document.getElementById('ghostText1').style.display = key === 'bg1' ? 'block' : 'none';
+  document.getElementById('ghostText4').style.display = key === 'bg4' ? 'block' : 'none';
+
+  // Punto segreto visibile solo su bg1
+  document.getElementById('secretTrigger').style.display = key === 'bg1' ? 'block' : 'none';
+
+  // Stoppa tutte le tracce
+  Object.values(audios).forEach(audio => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
+
+  // Se stava suonando, fai partire l’audio del nuovo sfondo
+  if (isPlaying) {
+    audios[key].play();
+  }
+
+  currentBg = key;
+}
+
+// Al click su un bottone cambia sfondo
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    setBackground(btn.dataset.bg);
+  });
+});
+
+// Bottone play/pause
+const toggleBtn = document.getElementById('togglePlayBtn');
+const playIcon = document.getElementById('playIcon');
+
+toggleBtn.addEventListener('click', () => {
+  if (isPlaying) {
+    // Ferma audio attivo
+    audios[currentBg].pause();
+    isPlaying = false;
+    playIcon.classList.remove('fa-pause');
+    playIcon.classList.add('fa-play');
+  } else {
+    // Riproduci audio attivo
+    audios[currentBg].play();
+    isPlaying = true;
+    playIcon.classList.remove('fa-play');
+    playIcon.classList.add('fa-pause');
+  }
+});
+
+// Inizializza
+setBackground(currentBg);
 <div class="buttons-container">
   <button data-bg="bg1" class="active">Sfondo 1</button>
   <button data-bg="bg2">Sfondo 2</button>
