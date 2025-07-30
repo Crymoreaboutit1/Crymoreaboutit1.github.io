@@ -4,19 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>KuloKiLegge</title>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     html, body {
-      margin: 0; padding: 0; height: 100%;
+      margin: 0;
+      padding: 0;
+      height: 100%;
       background-color: #222;
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
       transition: background-image 0.5s ease-in-out;
     }
+
     .buttons-container {
       position: fixed;
       bottom: 20px;
@@ -47,100 +47,26 @@
       color: white;
     }
 
-    .audio-player {
-      position: fixed;
-      bottom: 90px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1100;
-      background: rgba(0,0,0,0.5);
-      padding: 8px 12px;
-      border-radius: 8px;
-    }
-
-    /* Ghost text & other styles below */
-    .ghost-text {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      font-family: 'Georgia', serif;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.15);
-      max-width: 280px;
-      text-align: right;
-      pointer-events: none;
-      user-select: none;
-      line-height: 1.4;
-      z-index: 9999;
-      transition: color 0.3s ease;
-      display: none;
-      white-space: pre-line;
-    }
-
-    .ghost-text:hover {
-      color: rgba(255, 255, 255, 0.4);
-    }
-
-    .jp-kanji {
-      color: rgba(255, 255, 255, 0.15);
-    }
-
-    .jp-romaji {
-      color: rgba(255, 50, 50, 0.15);
-      font-style: italic;
-    }
-
-    .jp-kanji:hover {
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .jp-romaji:hover {
-      color: rgba(255, 50, 50, 0.5);
-    }
-
-    /* Punto segreto */
-    .secret-trigger {
+    .custom-player {
       position: fixed;
       bottom: 20px;
-      left: 20px;
-      width: 20px;
-      height: 20px;
-      opacity: 0;
-      cursor: pointer;
-      z-index: 99999;
-    }
-
-    /* Cuore animato */
-    .heart-popup {
-      position: fixed;
-      bottom: 40px;
-      left: 40px;
-      font-size: 24px;
-      color: pink;
-      opacity: 0;
-      animation: fadeOutUp 2s ease forwards;
-      z-index: 99999;
-    }
-
-    @keyframes fadeOutUp {
-      0% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-40px); }
-    }
-
-    /* Frase visibile nello sfondo 4 */
-    .visible-quote {
-      position: fixed;
-      top: 20px;
       right: 20px;
-      font-family: 'Georgia', serif;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.8);
-      max-width: 280px;
-      text-align: right;
-      line-height: 1.4;
       z-index: 9999;
-      white-space: pre-line;
-      display: none;
+    }
+
+    #playPauseBtn {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 50%;
+      padding: 12px;
+      font-size: 20px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #playPauseBtn:hover {
+      background: rgba(255,255,255,0.3);
     }
   </style>
 </head>
@@ -152,44 +78,16 @@
     <button data-bg="bg4">Sfondo 4</button>
   </div>
 
-  <!-- Player audio separati -->
-  <div id="player-bg1" class="audio-player" style="display:block;">
-    <audio controls id="playerAudio1" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/Diver.mp3" loop></audio>
-  </div>
-  <div id="player-bg2" class="audio-player" style="display:none;">
-    <audio controls id="playerAudio2" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/Mononoke.mp3" loop></audio>
-  </div>
-  <div id="player-bg3" class="audio-player" style="display:none;">
-    <audio controls id="playerAudio3" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/Bleach.mp3" loop></audio>
-  </div>
-  <div id="player-bg4" class="audio-player" style="display:none;">
-    <audio controls id="playerAudio4" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/tuacanzone4.mp3" loop></audio>
+  <!-- Player custom -->
+  <div class="custom-player">
+    <button id="playPauseBtn"><i class="fas fa-play"></i></button>
   </div>
 
-  <!-- Ghost text sfondo 1 -->
-  <div id="ghostText1" class="ghost-text">
-    Though his light slipped into shadow,<br>
-    mine will never carry darkness.<br>
-    We´ll be fine — sleep well, Athena.
-  </div>
-
-  <!-- Frase visibile e copiabile sfondo 4 -->
-  <div id="ghostText4" class="visible-quote">
-    <span class="jp-kanji">息をしたくて ここは苦しくて</span><br>
-    <span class="jp-romaji">iki wo shitakute koko wa kurushikute</span><br>
-    <span class="jp-kanji">闇を見上げるだけの夜は もがく減圧症のダイバー</span><br>
-    <span class="jp-romaji">yami wo miageru dake no yoru wa, mogaku gen’atsushou no daibaa</span><br>
-    <span class="jp-kanji">生きているんだって 確かめたくて</span><br>
-    <span class="jp-romaji">ikite iru’ndatte tashikametakute</span><br>
-    <span class="jp-kanji">深い海底を目指してもう一度 呼吸をしよう</span><br>
-    <span class="jp-romaji">fukai kaitei wo mezashite mou ichido kokyuu wo shiyou</span>
-  </div>
-
-  <!-- Punto segreto -->
-  <a href="https://xatimg.com/image/wdP32DMgGg3K.jpg" id="secretTrigger" class="secret-trigger" style="display: none;"></a>
-
-  <!-- Cuore -->
-  <div id="heartPopup" class="heart-popup" style="display: none;">❤️</div>
+  <!-- Audio tracks (una per ogni sfondo) -->
+  <audio id="audio-bg1" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/diver.mp3" loop></audio>
+  <audio id="audio-bg2" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/Mononoke.mp3" loop></audio>
+  <audio id="audio-bg3" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/Bleach.mp3" loop></audio>
+  <audio id="audio-bg4" src="https://github.com/Crymoreaboutit1/Crymoreaboutit1.github.io/raw/main/song4.mp3" loop></audio>
 
   <script>
     const backgrounds = {
@@ -200,50 +98,34 @@
     };
 
     const buttons = document.querySelectorAll('.buttons-container button');
-
-    // Container dei player audio
-    const players = {
-      bg1: document.getElementById('player-bg1'),
-      bg2: document.getElementById('player-bg2'),
-      bg3: document.getElementById('player-bg3'),
-      bg4: document.getElementById('player-bg4'),
+    const audioElements = {
+      bg1: document.getElementById('audio-bg1'),
+      bg2: document.getElementById('audio-bg2'),
+      bg3: document.getElementById('audio-bg3'),
+      bg4: document.getElementById('audio-bg4'),
     };
 
-    // Tag audio veri e propri
-    const audios = {
-      bg1: document.getElementById('playerAudio1'),
-      bg2: document.getElementById('playerAudio2'),
-      bg3: document.getElementById('playerAudio3'),
-      bg4: document.getElementById('playerAudio4'),
-    };
+    let currentBg = 'bg1';
+    let currentAudio = audioElements[currentBg];
+
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const playIcon = playPauseBtn.querySelector('i');
 
     function setBackground(key) {
-      // Cambia immagine di sfondo
       document.body.style.backgroundImage = `url('${backgrounds[key]}')`;
 
-      // Attiva bottone corretto
       buttons.forEach(btn => {
         btn.classList.toggle('active', btn.dataset.bg === key);
       });
 
-      // Gestione testi e secret trigger
-      document.getElementById('ghostText1').style.display = key === 'bg1' ? 'block' : 'none';
-      document.getElementById('ghostText4').style.display = key === 'bg4' ? 'block' : 'none';
-      document.getElementById('secretTrigger').style.display = key === 'bg1' ? 'block' : 'none';
-
-      // Gestione player audio: mostra solo quello giusto, ferma e nasconde gli altri
-      for (const bg in players) {
-        if (bg === key) {
-          players[bg].style.display = 'block';
-          audios[bg].play().catch(() => {
-            // Se il browser blocca l'autoplay, niente panico
-          });
-        } else {
-          players[bg].style.display = 'none';
-          audios[bg].pause();
-          audios[bg].currentTime = 0;
-        }
+      if (currentAudio && !currentAudio.paused) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
       }
+
+      currentBg = key;
+      currentAudio = audioElements[currentBg];
+      playIcon.classList.replace('fa-pause', 'fa-play');
     }
 
     buttons.forEach(btn => {
@@ -252,20 +134,18 @@
       });
     });
 
-    // Inizializza con sfondo e audio 1
-    setBackground('bg1');
-
-    // Punto segreto con cuore
-    const secretTrigger = document.getElementById('secretTrigger');
-    secretTrigger.addEventListener('click', (e) => {
-      const heart = document.getElementById("heartPopup");
-      heart.style.display = 'block';
-      setTimeout(() => {
-        heart.style.display = 'none';
-        window.open(secretTrigger.href, '_blank');
-      }, 2000);
-      e.preventDefault();
+    playPauseBtn.addEventListener('click', () => {
+      if (currentAudio.paused) {
+        currentAudio.play();
+        playIcon.classList.replace('fa-play', 'fa-pause');
+      } else {
+        currentAudio.pause();
+        playIcon.classList.replace('fa-pause', 'fa-play');
+      }
     });
+
+    // Imposta iniziale
+    setBackground('bg1');
   </script>
 </body>
 </html>
