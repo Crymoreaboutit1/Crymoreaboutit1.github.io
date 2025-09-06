@@ -47,7 +47,7 @@
       color: white;
     }
 
-    .custom-player {.
+    .custom-player {
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -68,6 +68,20 @@
     #playPauseBtn:hover {
       background: rgba(255,255,255,0.3);
     }
+
+    #text-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 2rem;
+      font-family: "Arial", sans-serif;
+      text-align: center;
+      white-space: pre-line;
+      z-index: 1;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -76,11 +90,17 @@
     <button data-bg="bg2">2</button>
     <button data-bg="bg3">3</button>
     <button data-bg="bg4">4</button>
+    <button data-bg="none">Testo</button> <!-- Nuovo pulsante per mostrare il testo -->
   </div>
 
   <!-- Player custom -->
   <div class="custom-player">
     <button id="playPauseBtn"><i class="fas fa-play"></i></button>
+  </div>
+
+  <!-- Testo che appare al centro quando bg1 è disattivato -->
+  <div id="text-overlay">
+    好きなことが少なくなる<br>嫌いなことがたくさん増えた。
   </div>
 
   <!-- Audio tracks (una per ogni sfondo) -->
@@ -91,6 +111,7 @@
 
   <script>
     const backgrounds = {
+      none: '',
       bg1: 'https://xatimg.com/image/5TB22e9uT07g.jpg',
       bg2: 'https://xatimg.com/image/38ytDGynfAz7.gif',
       bg3: 'https://xatimg.com/image/rZweBJxhvlw8.jpg',
@@ -112,7 +133,15 @@
     const playIcon = playPauseBtn.querySelector('i');
 
     function setBackground(key) {
-      document.body.style.backgroundImage = `url('${backgrounds[key]}')`;
+      const textOverlay = document.getElementById('text-overlay');
+
+      if (key === 'none') {
+        document.body.style.backgroundImage = 'none';
+        textOverlay.style.display = 'block'; // Mostra il testo
+      } else {
+        document.body.style.backgroundImage = `url('${backgrounds[key]}')`;
+        textOverlay.style.display = 'none'; // Nascondi il testo
+      }
 
       buttons.forEach(btn => {
         btn.classList.toggle('active', btn.dataset.bg === key);
@@ -124,8 +153,11 @@
       }
 
       currentBg = key;
-      currentAudio = audioElements[currentBg];
-      playIcon.classList.replace('fa-pause', 'fa-play');
+      currentAudio = audioElements[currentBg] || null;
+
+      if (currentAudio) {
+        playIcon.classList.replace('fa-pause', 'fa-play');
+      }
     }
 
     buttons.forEach(btn => {
@@ -149,10 +181,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
